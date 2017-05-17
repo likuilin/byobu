@@ -33,3 +33,6 @@ flagrow-byobu:
             create_private_discussions_with_groups: Create private discussions with groups
             edit_user_recipients: Edit users partaking in private discussions
             edit_group_recipients: Edit groups partaking in private discussions
+    notifications:
+        private_discussion_created:
+            title: "{user} created a private discussion {title}"
