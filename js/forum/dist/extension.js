@@ -1351,10 +1351,10 @@ System.register('flagrow/byobu/helpers/recipientsLabel', ['flarum/utils/extract'
 });;
 "use strict";
 
-System.register("flagrow/byobu/main", ["flarum/Model", "flarum/models/Discussion", "flagrow/byobu/addRecipientComposer", "flagrow/byobu/addRecipientLabels", "flagrow/byobu/addRecipientsControl", "flagrow/byobu/addHasRecipientsBadge", "flagrow/byobu/addDiscussPrivatelyControl", "flagrow/byobu/components/PrivateDiscussionIndex", "flagrow/byobu/components/RecipientsModified"], function (_export, _context) {
+System.register("flagrow/byobu/main", ["flarum/Model", "flarum/models/Discussion", "flagrow/byobu/addRecipientComposer", "flagrow/byobu/addRecipientLabels", "flagrow/byobu/addRecipientsControl", "flagrow/byobu/addHasRecipientsBadge", "flagrow/byobu/addDiscussPrivatelyControl", "flagrow/byobu/addChatControl", "flagrow/byobu/components/PrivateDiscussionIndex", "flagrow/byobu/components/RecipientsModified"], function (_export, _context) {
     "use strict";
 
-    var Model, Discussion, addRecipientComposer, addRecipientLabels, addRecipientsControl, addHasRecipientsBadge, addDiscussPrivatelyControl, PrivateDiscussionIndex, RecipientsModified;
+    var Model, Discussion, addRecipientComposer, addRecipientLabels, addRecipientsControl, addHasRecipientsBadge, addDiscussPrivatelyControl, addChatControl, PrivateDiscussionIndex, RecipientsModified;
     return {
         setters: [function (_flarumModel) {
             Model = _flarumModel.default;
@@ -1370,6 +1370,8 @@ System.register("flagrow/byobu/main", ["flarum/Model", "flarum/models/Discussion
             addHasRecipientsBadge = _flagrowByobuAddHasRecipientsBadge.default;
         }, function (_flagrowByobuAddDiscussPrivatelyControl) {
             addDiscussPrivatelyControl = _flagrowByobuAddDiscussPrivatelyControl.default;
+        }, function (_flagrowByobuAddChatControl) {
+            addChatControl = _flagrowByobuAddChatControl.default;
         }, function (_flagrowByobuComponentsPrivateDiscussionIndex) {
             PrivateDiscussionIndex = _flagrowByobuComponentsPrivateDiscussionIndex.default;
         }, function (_flagrowByobuComponentsRecipientsModified) {
@@ -1397,7 +1399,112 @@ System.register("flagrow/byobu/main", ["flarum/Model", "flarum/models/Discussion
                 addHasRecipientsBadge();
 
                 addDiscussPrivatelyControl();
+                addChatControl();
             });
         }
     };
+});;
+'use strict';
+
+System.register('flagrow/byobu/addChatControl', ['flarum/extend', 'flarum/components/IndexPage', 'flarum/components/Button', 'flagrow/byobu/components/ChatModal'], function (_export, _context) {
+    "use strict";
+
+    var extend, IndexPage, Button, ChatModal;
+
+    _export('default', function () {
+        var chat = new ChatModal();
+
+        extend(IndexPage.prototype, 'sidebarItems', function (items) {
+            if (app.session.user) {
+                items.add('chat', Button.component({
+                    children: app.translator.trans('flagrow-byobu.forum.buttons.chat'),
+                    className: 'Button Button--primary Button--block IndexPage-chat',
+                    itemClassName: 'App-primaryControl',
+                    icon: 'commenting-o',
+                    onclick: function onclick() {
+                        return app.modal.show(chat);
+                    }
+                }), 5);
+            }
+
+            return items;
+        });
+    });
+
+    return {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumComponentsIndexPage) {
+            IndexPage = _flarumComponentsIndexPage.default;
+        }, function (_flarumComponentsButton) {
+            Button = _flarumComponentsButton.default;
+        }, function (_flagrowByobuComponentsChatModal) {
+            ChatModal = _flagrowByobuComponentsChatModal.default;
+        }],
+        execute: function () {}
+    };
+});;
+"use strict";
+
+System.register("flagrow/byobu/components/ChatModal", ["flarum/components/Modal", "flagrow/byobu/components/chat/ChatInput"], function (_export, _context) {
+    "use strict";
+
+    var Modal, ChatInput, ChatModal;
+    return {
+        setters: [function (_flarumComponentsModal) {
+            Modal = _flarumComponentsModal.default;
+        }, function (_flagrowByobuComponentsChatChatInput) {
+            ChatInput = _flagrowByobuComponentsChatChatInput.default;
+        }],
+        execute: function () {
+            ChatModal = function (_Modal) {
+                babelHelpers.inherits(ChatModal, _Modal);
+
+                function ChatModal() {
+                    babelHelpers.classCallCheck(this, ChatModal);
+                    return babelHelpers.possibleConstructorReturn(this, (ChatModal.__proto__ || Object.getPrototypeOf(ChatModal)).apply(this, arguments));
+                }
+
+                babelHelpers.createClass(ChatModal, [{
+                    key: "title",
+                    value: function title() {
+                        return app.translator.trans('flagrow-byobu.forum.buttons.chat');
+                    }
+                }, {
+                    key: "content",
+                    value: function content() {
+                        return m('div', [ChatInput.component()]);
+                    }
+                }, {
+                    key: "onsubmit",
+                    value: function onsubmit() {}
+                }, {
+                    key: "className",
+                    value: function className() {
+                        return 'Modal--large';
+                    }
+                }]);
+                return ChatModal;
+            }(Modal);
+
+            _export("default", ChatModal);
+        }
+    };
+});;
+"use strict";
+
+System.register("flagrow/byobu/components/chat/ChatInput", [], function (_export, _context) {
+  "use strict";
+
+  var ChatInput;
+  return {
+    setters: [],
+    execute: function () {
+      ChatInput = function ChatInput() {
+        babelHelpers.classCallCheck(this, ChatInput);
+      };
+
+      _export("default", ChatInput);
+    }
+  };
 });

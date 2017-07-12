@@ -161,24 +161,53 @@ System.register('flagrow/byobu/helpers/recipientsLabel', ['flarum/utils/extract'
     execute: function () {}
   };
 });;
-'use strict';
+"use strict";
 
-System.register('flagrow/byobu/main', ['flarum/core/models/User', 'flagrow/byobu/addPrivateDiscussionPermission'], function (_export, _context) {
-  "use strict";
+System.register("flagrow/byobu/main", ["flarum/core/models/User", "flagrow/byobu/addPrivateDiscussionPermission", "flagrow/byobu/addChatPermission"], function (_export, _context) {
+    "use strict";
 
-  var User, addPrivateDiscussionPermission;
-  return {
-    setters: [function (_flarumCoreModelsUser) {
-      User = _flarumCoreModelsUser.default;
-    }, function (_flagrowByobuAddPrivateDiscussionPermission) {
-      addPrivateDiscussionPermission = _flagrowByobuAddPrivateDiscussionPermission.default;
-    }],
-    execute: function () {
+    var User, addPrivateDiscussionPermission, addChatPermission;
+    return {
+        setters: [function (_flarumCoreModelsUser) {
+            User = _flarumCoreModelsUser.default;
+        }, function (_flagrowByobuAddPrivateDiscussionPermission) {
+            addPrivateDiscussionPermission = _flagrowByobuAddPrivateDiscussionPermission.default;
+        }, function (_flagrowByobuAddChatPermission) {
+            addChatPermission = _flagrowByobuAddChatPermission.default;
+        }],
+        execute: function () {
 
-      app.initializers.add('flagrow-byobu', function (app) {
-        app.store.models.recipients = User;
-        addPrivateDiscussionPermission();
-      });
-    }
-  };
+            app.initializers.add('flagrow-byobu', function (app) {
+                app.store.models.recipients = User;
+                addPrivateDiscussionPermission();
+                addChatPermission();
+            });
+        }
+    };
+});;
+"use strict";
+
+System.register("flagrow/byobu/addChatPermission", ["flarum/extend", "flarum/components/PermissionGrid"], function (_export, _context) {
+    "use strict";
+
+    var extend, PermissionGrid;
+
+    _export("default", function () {
+        extend(PermissionGrid.prototype, 'startItems', function (items) {
+            items.add('startChat', {
+                icon: 'commenting-o',
+                label: app.translator.trans('flagrow-byobu.admin.permission.chat'),
+                permission: 'startChat'
+            }, 95);
+        });
+    });
+
+    return {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumComponentsPermissionGrid) {
+            PermissionGrid = _flarumComponentsPermissionGrid.default;
+        }],
+        execute: function () {}
+    };
 });

@@ -5,6 +5,7 @@ import addRecipientLabels from "flagrow/byobu/addRecipientLabels";
 import addRecipientsControl from "flagrow/byobu/addRecipientsControl";
 import addHasRecipientsBadge from "flagrow/byobu/addHasRecipientsBadge";
 import addDiscussPrivatelyControl from 'flagrow/byobu/addDiscussPrivatelyControl';
+import addChatControl from 'flagrow/byobu/addChatControl';
 
 import PrivateDiscussionIndex from "flagrow/byobu/components/PrivateDiscussionIndex";
 import RecipientsModified from "flagrow/byobu/components/RecipientsModified";
@@ -29,4 +30,5 @@ app.initializers.add('flagrow-byobu', function(app) {
     addHasRecipientsBadge();
 
     addDiscussPrivatelyControl();
+    addChatControl();
 });
