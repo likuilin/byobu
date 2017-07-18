@@ -1,0 +1,30 @@
+.Byobu--chat {
+    position: relative;
+
+    .history {
+        float: left;
+        width: 70%;
+        min-height: 60vh;
+        border-right: 3px solid darken(@overlay-bg, 5%);
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                padding: 1em;
+            }
+        }
+    }
+    .recipient--selection {
+        float: right;
+        width: 30%;
+        border-left: 2px solid darken(@overlay-bg, 15%);
+    }
+    .title {
+        width: 100%;
+    }
+    .input {
+        width: 100%;
+    }
+}

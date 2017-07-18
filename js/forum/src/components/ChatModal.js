@@ -21,9 +21,35 @@ export default class ChatModal extends Modal {
      * @abstract
      */
     content() {
-        return m('div', [
-            ChatInput.component()
+        return m('div', {
+            className: 'Byobu--chat'
+        }, [
+            m('div', {className: 'title'}, this.chatTitle()),
+            m('div', [
+                m('div', {className: 'history'}, this.chatHistory()),
+                m('div', {className: 'recipient--selection'}, this.recipientSelection()),
+            ]),
+            m('div', {className: 'input'}, this.chatInput())
         ])
+    }
+
+    chatInput() {
+        return ChatInput.component();
+    }
+
+    recipientSelection() {
+        return null;
+    }
+
+    chatTitle() {
+        return null;
+    }
+
+    chatHistory() {
+        return m('ul', [
+            m('li', 'Hi'),
+            m('li', 'Foo')
+        ]);
     }
 
     /**

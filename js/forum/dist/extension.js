@@ -1,5 +1,45 @@
 'use strict';
 
+System.register('flagrow/byobu/addChatControl', ['flarum/extend', 'flarum/components/IndexPage', 'flarum/components/Button', 'flagrow/byobu/components/ChatModal'], function (_export, _context) {
+    "use strict";
+
+    var extend, IndexPage, Button, ChatModal;
+
+    _export('default', function () {
+        var chat = new ChatModal();
+
+        extend(IndexPage.prototype, 'sidebarItems', function (items) {
+            if (app.session.user) {
+                items.add('chat', Button.component({
+                    children: app.translator.trans('flagrow-byobu.forum.buttons.chat'),
+                    className: 'Button Button--primary Button--block IndexPage-chat',
+                    itemClassName: 'App-primaryControl',
+                    icon: 'commenting-o',
+                    onclick: function onclick() {
+                        return app.modal.show(chat);
+                    }
+                }), 5);
+            }
+
+            return items;
+        });
+    });
+
+    return {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumComponentsIndexPage) {
+            IndexPage = _flarumComponentsIndexPage.default;
+        }, function (_flarumComponentsButton) {
+            Button = _flarumComponentsButton.default;
+        }, function (_flagrowByobuComponentsChatModal) {
+            ChatModal = _flagrowByobuComponentsChatModal.default;
+        }],
+        execute: function () {}
+    };
+});;
+'use strict';
+
 System.register('flagrow/byobu/addDiscussPrivatelyControl', ['flarum/extend', 'flarum/utils/UserControls', 'flarum/components/DiscussionComposer', 'flarum/components/Button', 'flarum/utils/ItemList'], function (_export, _context) {
     "use strict";
 
@@ -419,6 +459,75 @@ System.register("flagrow/byobu/components/AddRecipientModal", ["flarum/component
             }(Modal);
 
             _export("default", AddRecipientModal);
+        }
+    };
+});;
+"use strict";
+
+System.register("flagrow/byobu/components/ChatModal", ["flarum/components/Modal", "flagrow/byobu/components/chat/ChatInput"], function (_export, _context) {
+    "use strict";
+
+    var Modal, ChatInput, ChatModal;
+    return {
+        setters: [function (_flarumComponentsModal) {
+            Modal = _flarumComponentsModal.default;
+        }, function (_flagrowByobuComponentsChatChatInput) {
+            ChatInput = _flagrowByobuComponentsChatChatInput.default;
+        }],
+        execute: function () {
+            ChatModal = function (_Modal) {
+                babelHelpers.inherits(ChatModal, _Modal);
+
+                function ChatModal() {
+                    babelHelpers.classCallCheck(this, ChatModal);
+                    return babelHelpers.possibleConstructorReturn(this, (ChatModal.__proto__ || Object.getPrototypeOf(ChatModal)).apply(this, arguments));
+                }
+
+                babelHelpers.createClass(ChatModal, [{
+                    key: "title",
+                    value: function title() {
+                        return app.translator.trans('flagrow-byobu.forum.buttons.chat');
+                    }
+                }, {
+                    key: "content",
+                    value: function content() {
+                        return m('div', {
+                            className: 'Byobu--chat'
+                        }, [m('div', { className: 'title' }, this.chatTitle()), m('div', [m('div', { className: 'history' }, this.chatHistory()), m('div', { className: 'recipient--selection' }, this.recipientSelection())]), m('div', { className: 'input' }, this.chatInput())]);
+                    }
+                }, {
+                    key: "chatInput",
+                    value: function chatInput() {
+                        return ChatInput.component();
+                    }
+                }, {
+                    key: "recipientSelection",
+                    value: function recipientSelection() {
+                        return null;
+                    }
+                }, {
+                    key: "chatTitle",
+                    value: function chatTitle() {
+                        return null;
+                    }
+                }, {
+                    key: "chatHistory",
+                    value: function chatHistory() {
+                        return m('ul', [m('li', 'Hi'), m('li', 'Foo')]);
+                    }
+                }, {
+                    key: "onsubmit",
+                    value: function onsubmit() {}
+                }, {
+                    key: "className",
+                    value: function className() {
+                        return 'Modal--large';
+                    }
+                }]);
+                return ChatModal;
+            }(Modal);
+
+            _export("default", ChatModal);
         }
     };
 });;
@@ -1098,6 +1207,38 @@ System.register("flagrow/byobu/components/RecipientsModified", ["flarum/componen
 });;
 'use strict';
 
+System.register('flagrow/byobu/components/chat/ChatInput', ['flarum/Component'], function (_export, _context) {
+    "use strict";
+
+    var Component, ChatInput;
+    return {
+        setters: [function (_flarumComponent) {
+            Component = _flarumComponent.default;
+        }],
+        execute: function () {
+            ChatInput = function (_Component) {
+                babelHelpers.inherits(ChatInput, _Component);
+
+                function ChatInput() {
+                    babelHelpers.classCallCheck(this, ChatInput);
+                    return babelHelpers.possibleConstructorReturn(this, (ChatInput.__proto__ || Object.getPrototypeOf(ChatInput)).apply(this, arguments));
+                }
+
+                babelHelpers.createClass(ChatInput, [{
+                    key: 'view',
+                    value: function view() {
+                        return m('div');
+                    }
+                }]);
+                return ChatInput;
+            }(Component);
+
+            _export('default', ChatInput);
+        }
+    };
+});;
+'use strict';
+
 System.register('flagrow/byobu/components/sources/GroupSearchSource', ['flarum/helpers/highlight'], function (_export, _context) {
     "use strict";
 
@@ -1403,108 +1544,4 @@ System.register("flagrow/byobu/main", ["flarum/Model", "flarum/models/Discussion
             });
         }
     };
-});;
-'use strict';
-
-System.register('flagrow/byobu/addChatControl', ['flarum/extend', 'flarum/components/IndexPage', 'flarum/components/Button', 'flagrow/byobu/components/ChatModal'], function (_export, _context) {
-    "use strict";
-
-    var extend, IndexPage, Button, ChatModal;
-
-    _export('default', function () {
-        var chat = new ChatModal();
-
-        extend(IndexPage.prototype, 'sidebarItems', function (items) {
-            if (app.session.user) {
-                items.add('chat', Button.component({
-                    children: app.translator.trans('flagrow-byobu.forum.buttons.chat'),
-                    className: 'Button Button--primary Button--block IndexPage-chat',
-                    itemClassName: 'App-primaryControl',
-                    icon: 'commenting-o',
-                    onclick: function onclick() {
-                        return app.modal.show(chat);
-                    }
-                }), 5);
-            }
-
-            return items;
-        });
-    });
-
-    return {
-        setters: [function (_flarumExtend) {
-            extend = _flarumExtend.extend;
-        }, function (_flarumComponentsIndexPage) {
-            IndexPage = _flarumComponentsIndexPage.default;
-        }, function (_flarumComponentsButton) {
-            Button = _flarumComponentsButton.default;
-        }, function (_flagrowByobuComponentsChatModal) {
-            ChatModal = _flagrowByobuComponentsChatModal.default;
-        }],
-        execute: function () {}
-    };
-});;
-"use strict";
-
-System.register("flagrow/byobu/components/ChatModal", ["flarum/components/Modal", "flagrow/byobu/components/chat/ChatInput"], function (_export, _context) {
-    "use strict";
-
-    var Modal, ChatInput, ChatModal;
-    return {
-        setters: [function (_flarumComponentsModal) {
-            Modal = _flarumComponentsModal.default;
-        }, function (_flagrowByobuComponentsChatChatInput) {
-            ChatInput = _flagrowByobuComponentsChatChatInput.default;
-        }],
-        execute: function () {
-            ChatModal = function (_Modal) {
-                babelHelpers.inherits(ChatModal, _Modal);
-
-                function ChatModal() {
-                    babelHelpers.classCallCheck(this, ChatModal);
-                    return babelHelpers.possibleConstructorReturn(this, (ChatModal.__proto__ || Object.getPrototypeOf(ChatModal)).apply(this, arguments));
-                }
-
-                babelHelpers.createClass(ChatModal, [{
-                    key: "title",
-                    value: function title() {
-                        return app.translator.trans('flagrow-byobu.forum.buttons.chat');
-                    }
-                }, {
-                    key: "content",
-                    value: function content() {
-                        return m('div', [ChatInput.component()]);
-                    }
-                }, {
-                    key: "onsubmit",
-                    value: function onsubmit() {}
-                }, {
-                    key: "className",
-                    value: function className() {
-                        return 'Modal--large';
-                    }
-                }]);
-                return ChatModal;
-            }(Modal);
-
-            _export("default", ChatModal);
-        }
-    };
-});;
-"use strict";
-
-System.register("flagrow/byobu/components/chat/ChatInput", [], function (_export, _context) {
-  "use strict";
-
-  var ChatInput;
-  return {
-    setters: [],
-    execute: function () {
-      ChatInput = function ChatInput() {
-        babelHelpers.classCallCheck(this, ChatInput);
-      };
-
-      _export("default", ChatInput);
-    }
-  };
 });
