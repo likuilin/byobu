@@ -24,6 +24,9 @@
     "require": {
         "flarum/core": "^0.1.0-beta.8"
     },
+    "require-dev": {
+        "flagrow/steamroller": "*"
+    },
     "extra": {
         "flarum-extension": {
             "title": "Flagrow Byōbu",
@@ -43,5 +46,12 @@
         "psr-4": {
             "Flagrow\\Byobu\\": "src/"
         }
-    }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flagrow\\Byobu\\Tests\\": "tests/unit/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
