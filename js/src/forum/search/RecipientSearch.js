@@ -29,6 +29,8 @@ export default class RecipientSearch extends Search {
             $search.$('.RecipientsInput').focus();
         });
 
+        this.doSearch = true;
+
         $('.RecipientsInput')
             .on('keyup', () => {
                 clearTimeout(this.typingTimer);
@@ -100,7 +102,7 @@ export default class RecipientSearch extends Search {
                     'ul',
                     {
                         className:
-                            'Dropdown-menu Search-results fade ' +
+                            'Dropdown-menu Search-results ' +
                             classList({
                                 in: !!loading,
                             }),

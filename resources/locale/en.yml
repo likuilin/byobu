@@ -20,7 +20,7 @@ fof-byobu:
             start_button: Discuss Privately
             nav_item: "Private Discussions"
         input:
-            search_recipients: Search recipient by typing first three characters...
+            search_recipients: Search users by typing first three characters...
         search:
             headings:
                 groups: Permission Groups
