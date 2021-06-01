@@ -15,7 +15,7 @@ export default (app) => {
                     icon: app.forum.data.attributes['byobu.icon-badge'],
                     href: app.route('byobuPrivate'),
                 }, app.translator.trans('fof-byobu.forum.nav.nav_item')),
-                75
+                99
             );
         }
     });
