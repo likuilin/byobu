@@ -1,3 +1,15 @@
+# kuilin's branch of byobu
+
+This is a fork of Byobu implementing a few changes for a private instance of Flarum. 
+
+Changes: 
+
+* Makes the search results in "Add recipients to your discussion" always be present, listing all permissions groups (and no users) instead of not being present when the search box is empty. This allows users to more quickly select groups, assuming the number of groups is reasonably small (which it should be). 
+
+![image](https://user-images.githubusercontent.com/16179637/120252642-bbdb1e00-c24a-11eb-86d9-c8dde4a1ed2a.png)
+
+* Makes Private Discussions in the nav sidebar priority 99 instead of 75, so that it sits on top of User Directory with that extension.
+
 # Byōbu by FriendsOfFlarum
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/FriendsOfFlarum/byobu/blob/master/LICENSE)
